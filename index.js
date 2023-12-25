@@ -1,23 +1,17 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const env = require('dotenv').config();
-var cors = require('cors')
+const setServer = require('./server');
 const database = require("mongoose");
+require('dotenv').config();
 const port  = process.env.PORT;
-const routes = require('./src/routes/routes');
 
 
 database.connect("mongodb://localhost:27017/apartment")
     .then(()=> {
-        const app = express();
-
-        app.use(bodyParser.json())
-        app.use(cors());
-        app.use("/api", routes)
+        const app = setServer()
         app.listen(port, ()=> {
             console.log(`Server is running on port ${port}`)
             console.log("MongoDb connected");
         })
     })
-
-
+    .catch((err)=> {
+        console.log(err)
+})

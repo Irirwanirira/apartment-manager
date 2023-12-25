@@ -90,6 +90,17 @@ router.delete("/apartments/:id", async(req, res) => {
   }
 })
 
-
+router.put("/apartments/:id", async(req, res) => {
+    try {
+        const id = req.params.id;
+        const apartment =  await Apartment.findOne({_id: id});
+        apartment.full = !apartment.full;
+        await apartment.save();
+        return res.status(200).send(apartment);
+        
+    } catch (error) {
+        return res.status(404).send({ error: "Apartment doesn't exist" });
+    }
+})
 
 module.exports = router;
