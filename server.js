@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const routes = require('./src/routes/routes');
 
-function setServer(){
+function createServer(){
     const app = express();
     app.use(bodyParser.json())
     app.use("/api", routes)
@@ -10,4 +10,4 @@ function setServer(){
     return app;
 }
 
-module.exports  = setServer;
+module.exports  = createServer;
